@@ -1,0 +1,5 @@
+docker-compose build
+docker tag infini-cache localhost:5000/infini-cache:v1.0.11
+docker push localhost:5000/infini-cache:v1.0.11
+
+

@@ -1,0 +1,4 @@
+docker-compose build
+docker tag activemq localhost:5000/activemq:v5.16.0-journal
+docker push localhost:5000/activemq:v5.16.0-journal
+

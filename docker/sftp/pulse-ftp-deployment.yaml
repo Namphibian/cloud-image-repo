@@ -1,0 +1,70 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: pulse-ftp
+  namespace: pulse-ftp
+  labels:
+    version: 1.0.0
+    app: pulse-ftp
+spec:
+  ports:
+  - name: "ssh"
+    port: 22
+    targetPort: 22
+  selector:
+    app: pulse-ftp
+
+---
+
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: sftp
+  namespace: pulse-ftp
+  labels:
+    version: 1.0.0
+    app: pulse-ftp
+spec:
+  # how many pods and indicate which strategy we want for rolling update
+  replicas: 1
+  minReadySeconds: 10
+
+  template:
+
+    metadata:
+      labels:
+        version: v.1.0.0
+        app: sftp
+      #annotations:
+        #container.apparmor.security.beta.kubernetes.io/sftp: runtime/default
+
+    spec:
+      #secrets and config
+      volumes:
+      - name: pulse-ftp
+        azureFile:
+          secretName: pulse-ftp
+          shareName: pulse-ftp-pv
+          readOnly: false
+
+      containers:
+        #the sftp server itself
+        - name: pulse-ftp
+          image: pulsedevacr.azurecr.io/pulse-ftp:v1.0.0
+          imagePullPolicy: Always
+          #env:
+          #- name: PASSWORD
+          #  valueFrom:
+          #    secretKeyRef:
+          #      name: sftp-server-sec
+          #      key: password
+          #args: ["sftp_user:$(PASSWORD):1001:100:incoming,outgoing"] #create users and dirs
+          ports:
+            - containerPort: 22
+          volumeMounts:
+            - name: pulse-ftp
+              mountPath: /sftp
+          #securityContext:
+          #  capabilities:
+          #    add: ["SYS_ADMIN"]
+          #resources: {}

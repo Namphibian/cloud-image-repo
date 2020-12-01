@@ -1,0 +1,114 @@
+<infinispan
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:server="urn:infinispan:server:11.0"
+        xmlns:jdbc="urn:infinispan:config:store:jdbc:11.0"
+        xsi:schemaLocation="urn:infinispan:config:11.0 https://infinispan.org/schemas/infinispan-config-11.0.xsd
+                            urn:infinispan:server:11.0 https://infinispan.org/schemas/infinispan-server-11.0.xsd
+urn:infinispan:config:store:jdbc:11.0 http://www.infinispan.org/schemas/infinispan-cachestore-jdbc-config-11.0.xsd"
+        xmlns="urn:infinispan:config:11.0">
+
+
+    <cache-container name="default" statistics="true">
+
+        <transport cluster="${infinispan.cluster.name}" stack="kubernetes"
+                   node-name="${infinispan.node.name:}"/>
+        <local-cache name="local"/>
+        <invalidation-cache name="invalidation"/>
+        <replicated-cache name="replicated"/>
+        <distributed-cache name="distributed"/>
+        <local-cache name="testme">
+            <encoding>
+                <key media-type="application/x-java-object; type=java.lang.String"/>
+                <value media-type="application/json; charset=UTF-8"/>
+            </encoding>
+            <jdbc:string-keyed-jdbc-store
+                    preload="true"
+                    purge="false"
+                    shared="false"
+            >
+                <jdbc:data-source jndi-url="jdbc/infinispan"/>
+                <jdbc:string-keyed-table prefix="JDG">
+                    <jdbc:id-column name="ID" type="VARCHAR(255)"/>
+                    <jdbc:data-column name="DATA" type="VARBINARY(MAX)"/>
+                    <jdbc:timestamp-column name="TS" type="BIGINT"/>
+                    <jdbc:segment-column name="S" type="INT"/>
+                </jdbc:string-keyed-table>
+            </jdbc:string-keyed-jdbc-store>
+        </local-cache>
+        <invalidation-cache name="invalidtest">
+            <encoding>
+                <key media-type="application/x-java-object; type=java.lang.String"/>
+                <value media-type="application/json; charset=UTF-8"/>
+            </encoding>
+
+            <jdbc:string-keyed-jdbc-store
+                    preload="true"
+                    purge="false"
+                    shared="true"
+            >
+                <jdbc:data-source jndi-url="jdbc/infinispan"/>
+                <jdbc:string-keyed-table prefix="JDG" >
+                    <jdbc:id-column name="ID" type="VARCHAR(255)"/>
+                    <jdbc:data-column name="DATA" type="VARBINARY(MAX)"/>
+                    <jdbc:timestamp-column name="TS" type="BIGINT"/>
+                    <jdbc:segment-column name="S" type="INT"/>
+                </jdbc:string-keyed-table>
+            </jdbc:string-keyed-jdbc-store>
+        </invalidation-cache>
+    </cache-container>
+    <server xmlns="urn:infinispan:server:11.0">
+        <interfaces>
+            <interface name="public">
+                <inet-address value="${infinispan.bind.address:127.0.0.1}"/>
+            </interface>
+        </interfaces>
+        <socket-bindings default-interface="public" port-offset="${infinispan.socket.binding.port-offset:0}">
+            <socket-binding name="default" port="${infinispan.bind.port:11222}"/>
+            <socket-binding name="memcached" port="11221"/>
+        </socket-bindings>
+        <security>
+            <security-realms>
+                <security-realm name="default">
+                    <!-- Uncomment to enable TLS on the realm -->
+                    <!-- server-identities>
+                       <ssl>
+                          <keystore path="application.keystore" relative-to="infinispan.server.config.path"
+                                    keystore-password="password" alias="server" key-password="password"
+                                    generate-self-signed-certificate-host="localhost"/>
+                       </ssl>
+                    </server-identities-->
+                    <properties-realm groups-attribute="Roles">
+                        <user-properties path="users.properties" relative-to="infinispan.server.config.path"
+                                         plain-text="true"/>
+                        <group-properties path="groups.properties" relative-to="infinispan.server.config.path"/>
+                    </properties-realm>
+                </security-realm>
+            </security-realms>
+        </security>
+        <data-sources>
+            <data-source name="sqlInfinispan" jndi-name="jdbc/infinispan" statistics="true">
+                <connection-factory driver="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+                                    username="sa"
+                                    password="MssqlPass123"
+                                    url="jdbc:sqlserver://mssql-db-svc.default.svc.cluster.local:1433"
+                                    new-connection-sql="SELECT 1"
+                                    transaction-isolation="READ_COMMITTED">
+                    <connection-property name="databaseName">infinispan</connection-property>
+                </connection-factory>
+                <connection-pool
+                        initial-size="8"
+                        max-size="16"
+                        min-size="3"
+                        background-validation="1000"
+                        idle-removal="1"
+                        blocking-timeout="1000"
+                        leak-detection="10000"/>
+            </data-source>
+
+        </data-sources>
+        <endpoints socket-binding="default" security-realm="default">
+            <hotrod-connector name="hotrod"/>
+            <rest-connector name="rest"/>
+        </endpoints>
+    </server>
+</infinispan>

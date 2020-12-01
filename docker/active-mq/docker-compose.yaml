@@ -1,0 +1,32 @@
+version: '3'
+services:
+  activemq:
+    environment:
+      - amq_db_host=localhost
+      - amq_db_port=1433
+      - amq_db_name=dev_amq
+      - amq_db_uid=sa
+      - amq_db_pwd=MssqlPass123
+      - amq_db_poolpreparedstatements=true
+      - amq_db_initialsize=32
+      - amq_db_maxtotal=32
+      - amq_db_maxidle=32
+      - amq_db_minidle=32
+      - amq_db_maxwaitmillis=15000
+      - amq_db_validationquery=select 1
+      - amq_db_validationquerytimeout=5
+      - amq_db_testonborrow=true
+      - amq_db_testwhileidle=true
+      - amq_db_timebetweenevictionrunsmillis=500
+      - amq_db_numtestsperevictionrun=1
+      - amq_max_heap=1512M
+      - amq_start_heap=1024M
+      - amq_jms_max_connections=1000
+      - amq_jms_wire_format_max_frame_size=104857600
+    build: .
+    image: activemq
+    container_name: activemq
+    ports:
+        - "61616:61616"
+        - "80:80"
+        - "8080:8080"

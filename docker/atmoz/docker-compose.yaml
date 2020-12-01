@@ -1,0 +1,8 @@
+sftp:
+    image: atmoz/sftp
+    volumes:
+        - /~/docker-data:/home/foo/upload
+        - /~/git/docker/atmoz/users.conf:/etc/sftp/users.conf:ro
+    ports:
+        - "33:22"
+    command: foo:pass:1001

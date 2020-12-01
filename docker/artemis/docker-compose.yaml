@@ -1,0 +1,25 @@
+# Use root/example as user/password credentials
+version: "3.0"
+services:
+  artemis:
+
+    image: artemis
+    container_name: artemis
+    build: .
+    restart: always
+    ports:
+      - "8161:8161"
+      - "9404:9404"
+      - "61616:61616"
+      - "5445:5445"
+      - "5672:5672"
+      - "1883:1883"
+      - "61613:61613"
+    environment:
+      - ARTEMIS_USER= artemis
+      - ARTEMIS_PASSWORD= artemis
+      - ANONYMOUS_LOGIN= false
+      - EXTRA_ARGS= --http-host 0.0.0.0 --relax-jolokia --cluster-user artemisCluster  --cluster-password simetraehcaparetsulc
+    volumes:
+      - /home/cornelius/docker-data/artemis:/var/lib/artemis
+
