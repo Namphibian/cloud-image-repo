@@ -3,11 +3,11 @@ FROM openjdk:11-jre
 LABEL maintainer="Cornelius Franken <ncjfranken@gmail.com>"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /opt
-ENV ARTEMIS_USER artemis
-ENV ARTEMIS_PASSWORD artemis
-ENV ANONYMOUS_LOGIN false
+ENV ARTEMIS_USER=artemis
+ENV ARTEMIS_PASSWORD=artemis
+ENV ANONYMOUS_LOGIN=false
 ENV EXTRA_ARGS --http-host 0.0.0.0 --relax-jolokia
-ENV ACTIVEMQ_ARTEMIS_VERSION 2.16.0
+ENV ACTIVEMQ_ARTEMIS_VERSION=2.16.0
 ENV JMX_EXPORTER_VERSION=0.3.1
 ENV JGROUPS_KUBERNETES_VERSION=0.9.3
 RUN groupadd -g 1000 -r artemis && useradd -r -u 1000 -g artemis artemis \

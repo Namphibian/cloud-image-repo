@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  nexus-dev-store-image:
+    environment:
+      SA_PASSWORD: "MssqlPass123"
+      ACCEPT_EULA: Y
+      MSSQL_PID: Developer
+    build: .
+    network_mode: host
+
+    ports:
+      - "1435:1433"
+
+# docker commit -m "devstack-sql Template 20200311-1200" -a "PSC" dddf5089ef55 pulsedevacr.azurecr.io/devstack-sqldb
+# az acr login --name PulseDevACR
+# docker push pulsedevacr.azurecr.io/devstack-sqldb:latest

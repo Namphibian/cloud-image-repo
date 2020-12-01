@@ -1,0 +1,25 @@
+cd repo/charts/stable/prometheus
+helm install --name=prometheus . --namespace monitoring --set rbac.create=true
+cd ..
+cd grafana
+helm install stable/grafana --set persistence.enabled=true --set persistence.accessModes={ReadWriteOnce} --set persistence.size=32Gi -n grafana --namespace monitoring
+
+yEsXTDsD9nfXlvMFWLxBf9cG4zOCZHIlUhJTasyq
+
+
+PROMETHEUS OPERATOR INSTALL:
+
+1  cd C:\git\shrub-deployment\Aks-setup\prometheus\repo\charts\stable\prometheus-operator
+
+2. cd 
+
+kubectl delete crd prometheuses.monitoring.coreos.com 
+kubectl delete crd servicemonitors.monitoring.coreos.com 
+kubectl delete crd podmonitors.monitoring.coreos.com 
+kubectl delete crd alertmanagers.monitoring.coreos.com 
+kubectl delete crd prometheusrules.monitoring.coreos.com
+
+helm install --namespace monitoring --name prometheus-operator -f pvc-values.yaml stable/prometheus-operator
+helm install --namespace monitoring  -f pvc-values.yaml stable/prometheus-operator
+helm delete purge --name pulse-cluster-monitoring
+kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=system:serviceaccount:kube-system:default

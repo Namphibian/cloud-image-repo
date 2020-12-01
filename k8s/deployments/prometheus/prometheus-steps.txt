@@ -1,0 +1,15 @@
+az aks get-credentials --resource-group AEA-RSG-AKS-DEV-PULSE --name PulseDevAksTest
+helm repo add coreos https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
+helm install coreos/prometheus-operator --name prometheus-operator --namespace monitoring
+helm install coreos/kube-prometheus --name kube-prometheus --namespace monitoring
+echo username:$(kubectl get secret --namespace monitoring kube-prometheus-grafana -o jsonpath="{.data.user}"|base64 --decode;echo)
+echo password:$(kubectl get secret --namespace monitoring kube-prometheus-grafana -o jsonpath="{.data.password}"|base64 --decode;echo)
+kubectl -n monitoring edit servicemonitors kube-prometheus-exporter-kubelets  edit HTTPS to use HTTP
+Edit 
+kubectl -n kube-system edit service kube-prometheus-exporter-kube-dns
+- 9153 for ports instead of 10054 and 10055
+
+
+
+helm del --purge kube-prometheus 
+helm del --purge prometheus-operator

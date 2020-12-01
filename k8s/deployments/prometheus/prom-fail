@@ -1,0 +1,151 @@
+Name:           prometheus-pulse-monitor-prometheus-o-prometheus-0
+Namespace:      monitoring
+Priority:       0
+Node:           aks-pulsedev01-14986555-vmss000000/172.15.20.4
+Start Time:     Tue, 10 Mar 2020 09:57:09 +1100
+Labels:         app=prometheus
+                controller-revision-hash=prometheus-pulse-monitor-prometheus-o-prometheus-8d546bfb4
+                prometheus=pulse-monitor-prometheus-o-prometheus
+                statefulset.kubernetes.io/pod-name=prometheus-pulse-monitor-prometheus-o-prometheus-0
+Annotations:    <none>
+Status:         Running
+IP:             172.15.20.40
+IPs:            <none>
+Controlled By:  StatefulSet/prometheus-pulse-monitor-prometheus-o-prometheus
+Containers:
+  prometheus:
+    Container ID:  docker://8699fb42be37a1cd5815ff354cf85ae30087842a11d41b27b04e21dbd2b6fc32
+    Image:         quay.io/prometheus/prometheus:v2.15.2
+    Image ID:      docker-pullable://quay.io/prometheus/prometheus@sha256:914525123cf76a15a6aaeac069fcb445ce8fb125113d1bc5b15854bc1e8b6353
+    Port:          9090/TCP
+    Host Port:     0/TCP
+    Args:
+      --web.console.templates=/etc/prometheus/consoles
+      --web.console.libraries=/etc/prometheus/console_libraries
+      --config.file=/etc/prometheus/config_out/prometheus.env.yaml
+      --storage.tsdb.path=/prometheus
+      --storage.tsdb.retention.time=10d
+      --web.enable-lifecycle
+      --storage.tsdb.no-lockfile
+      --web.external-url=http://pulse-monitor-prometheus-o-prometheus.monitoring:9090
+      --web.route-prefix=/
+    State:          Running
+      Started:      Tue, 10 Mar 2020 09:59:46 +1100
+    Ready:          False
+    Restart Count:  0
+    Liveness:       http-get http://:web/-/healthy delay=0s timeout=3s period=5s #success=1 #failure=6
+    Readiness:      http-get http://:web/-/ready delay=0s timeout=3s period=5s #success=1 #failure=120
+    Environment:    <none>
+    Mounts:
+      /etc/prometheus/certs from tls-assets (ro)
+      /etc/prometheus/config_out from config-out (ro)
+      /etc/prometheus/rules/prometheus-pulse-monitor-prometheus-o-prometheus-rulefiles-0 from prometheus-pulse-monitor-prometheus-o-prometheus-rulefiles-0 (rw)
+      /prometheus from prometheus-pulse-monitor-prometheus-o-prometheus-db (rw,path="prometheus-db")
+      /var/run/secrets/kubernetes.io/serviceaccount from pulse-monitor-prometheus-o-prometheus-token-mwxld (ro)
+  prometheus-config-reloader:
+    Container ID:  docker://c3dae7bda4ef4dfc6bb186865e0ac558f5d9d23fb4ac30ee603d09b499021620
+    Image:         quay.io/coreos/prometheus-config-reloader:v0.36.0
+    Image ID:      docker-pullable://quay.io/coreos/prometheus-config-reloader@sha256:74cb2dcf9d8c61f90fb28b82a0358962fbda956a798c762e0ddf1214bb7a9955
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/prometheus-config-reloader
+    Args:
+      --log-format=logfmt
+      --reload-url=http://127.0.0.1:9090/-/reload
+      --config-file=/etc/prometheus/config/prometheus.yaml.gz
+      --config-envsubst-file=/etc/prometheus/config_out/prometheus.env.yaml
+    State:          Running
+      Started:      Tue, 10 Mar 2020 09:59:54 +1100
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     100m
+      memory:  25Mi
+    Requests:
+      cpu:     100m
+      memory:  25Mi
+    Environment:
+      POD_NAME:  prometheus-pulse-monitor-prometheus-o-prometheus-0 (v1:metadata.name)
+    Mounts:
+      /etc/prometheus/config from config (rw)
+      /etc/prometheus/config_out from config-out (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from pulse-monitor-prometheus-o-prometheus-token-mwxld (ro)
+  rules-configmap-reloader:
+    Container ID:  docker://d492c9db712280f7ef4fddf1cf84bdbcf950ee25bd258da4451321d3a4594307
+    Image:         quay.io/coreos/configmap-reload:v0.0.1
+    Image ID:      docker-pullable://quay.io/coreos/configmap-reload@sha256:e2fd60ff0ae4500a75b80ebaa30e0e7deba9ad107833e8ca53f0047c42c5a057
+    Port:          <none>
+    Host Port:     <none>
+    Args:
+      --webhook-url=http://127.0.0.1:9090/-/reload
+      --volume-dir=/etc/prometheus/rules/prometheus-pulse-monitor-prometheus-o-prometheus-rulefiles-0
+    State:          Running
+      Started:      Tue, 10 Mar 2020 09:59:59 +1100
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     100m
+      memory:  25Mi
+    Requests:
+      cpu:        100m
+      memory:     25Mi
+    Environment:  <none>
+    Mounts:
+      /etc/prometheus/rules/prometheus-pulse-monitor-prometheus-o-prometheus-rulefiles-0 from prometheus-pulse-monitor-prometheus-o-prometheus-rulefiles-0 (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from pulse-monitor-prometheus-o-prometheus-token-mwxld (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             False
+  ContainersReady   False
+  PodScheduled      True
+Volumes:
+  prometheus-pulse-monitor-prometheus-o-prometheus-db:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  prometheus-pulse-monitor-prometheus-o-prometheus-db-prometheus-pulse-monitor-prometheus-o-prometheus-0
+    ReadOnly:   false
+  config:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  prometheus-pulse-monitor-prometheus-o-prometheus
+    Optional:    false
+  tls-assets:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  prometheus-pulse-monitor-prometheus-o-prometheus-tls-assets
+    Optional:    false
+  config-out:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:
+    SizeLimit:  <unset>
+  prometheus-pulse-monitor-prometheus-o-prometheus-rulefiles-0:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      prometheus-pulse-monitor-prometheus-o-prometheus-rulefiles-0
+    Optional:  false
+  pulse-monitor-prometheus-o-prometheus-token-mwxld:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  pulse-monitor-prometheus-o-prometheus-token-mwxld
+    Optional:    false
+QoS Class:       Burstable
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type     Reason                  Age                     From                                         Message
+  ----     ------                  ----                    ----                                         -------
+  Normal   Scheduled               6m15s                   default-scheduler                            Successfully assigned monitoring/prometheus-pulse-monitor-prometheus-o-prometheus-0 to aks-pulsedev01-14986555-vmss000000
+  Warning  FailedAttachVolume      6m15s                   attachdetach-controller                      Multi-Attach error for volume "pvc-fff51b37-c203-48d1-8d58-71dfe4ce3880" Volume is already exclusively attached to one node and can't be attached to another
+  Normal   SuccessfulAttachVolume  5m3s                    attachdetach-controller                      AttachVolume.Attach succeeded for volume "pvc-fff51b37-c203-48d1-8d58-71dfe4ce3880"
+  Warning  FailedMount             4m12s                   kubelet, aks-pulsedev01-14986555-vmss000000  Unable to mount volumes for pod "prometheus-pulse-monitor-prometheus-o-prometheus-0_monitoring(a3265ac5-0337-4b12-8725-9b55b838dcaa)": timeout expired waiting for volumes to attach or mount for pod "monitoring"/"prometheus-pulse-monitor-prometheus-o-prometheus-0". list of unmounted volumes=[prometheus-pulse-monitor-prometheus-o-prometheus-db]. list of unattached volumes=[prometheus-pulse-monitor-prometheus-o-prometheus-db config tls-assets config-out prometheus-pulse-monitor-prometheus-o-prometheus-rulefiles-0 pulse-monitor-prometheus-o-prometheus-token-mwxld]
+  Normal   Pulling                 3m56s                   kubelet, aks-pulsedev01-14986555-vmss000000  Pulling image "quay.io/prometheus/prometheus:v2.15.2"
+  Normal   Pulled                  3m45s                   kubelet, aks-pulsedev01-14986555-vmss000000  Successfully pulled image "quay.io/prometheus/prometheus:v2.15.2"
+  Normal   Created                 3m38s                   kubelet, aks-pulsedev01-14986555-vmss000000  Created container prometheus
+  Normal   Started                 3m38s                   kubelet, aks-pulsedev01-14986555-vmss000000  Started container prometheus
+  Normal   Pulling                 3m38s                   kubelet, aks-pulsedev01-14986555-vmss000000  Pulling image "quay.io/coreos/prometheus-config-reloader:v0.36.0"
+  Normal   Pulled                  3m32s                   kubelet, aks-pulsedev01-14986555-vmss000000  Successfully pulled image "quay.io/coreos/prometheus-config-reloader:v0.36.0"
+  Normal   Created                 3m30s                   kubelet, aks-pulsedev01-14986555-vmss000000  Created container prometheus-config-reloader
+  Normal   Started                 3m30s                   kubelet, aks-pulsedev01-14986555-vmss000000  Started container prometheus-config-reloader
+  Normal   Pulling                 3m30s                   kubelet, aks-pulsedev01-14986555-vmss000000  Pulling image "quay.io/coreos/configmap-reload:v0.0.1"
+  Normal   Pulled                  3m26s                   kubelet, aks-pulsedev01-14986555-vmss000000  Successfully pulled image "quay.io/coreos/configmap-reload:v0.0.1"
+  Normal   Created                 3m25s                   kubelet, aks-pulsedev01-14986555-vmss000000  Created container rules-configmap-reloader
+  Normal   Started                 3m25s                   kubelet, aks-pulsedev01-14986555-vmss000000  Started container rules-configmap-reloader
+  Warning  Unhealthy               2m27s (x12 over 3m22s)  kubelet, aks-pulsedev01-14986555-vmss000000  Readiness probe failed: HTTP probe failed with statuscode: 503

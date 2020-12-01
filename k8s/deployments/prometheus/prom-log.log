@@ -1,0 +1,87 @@
+cornelius@namphi-ubuntu:/var/crash$ kubectl logs -f -n monitoring prometheus-pulse-monitor-prometheus-o-prometheus-0 prometheus
+level=info ts=2020-03-10T01:06:52.353Z caller=main.go:330 msg="Starting Prometheus" version="(version=2.15.2, branch=HEAD, revision=d9613e5c466c6e9de548c4dae1b9aabf9aaf7c57)"
+level=info ts=2020-03-10T01:06:52.353Z caller=main.go:331 build_context="(go=go1.13.5, user=root@688433cf4ff7, date=20200106-14:50:51)"
+level=info ts=2020-03-10T01:06:52.353Z caller=main.go:332 host_details="(Linux 4.15.0-1069-azure #74-Ubuntu SMP Fri Feb 7 17:22:24 UTC 2020 x86_64 prometheus-pulse-monitor-prometheus-o-prometheus-0 (none))"
+level=info ts=2020-03-10T01:06:52.353Z caller=main.go:333 fd_limits="(soft=1048576, hard=1048576)"
+level=info ts=2020-03-10T01:06:52.353Z caller=main.go:334 vm_limits="(soft=unlimited, hard=unlimited)"
+level=info ts=2020-03-10T01:06:52.456Z caller=main.go:648 msg="Starting TSDB ..."
+level=info ts=2020-03-10T01:06:52.456Z caller=web.go:506 component=web msg="Start listening for connections" address=0.0.0.0:9090
+level=info ts=2020-03-10T01:06:52.495Z caller=repair.go:59 component=tsdb msg="found healthy block" mint=1583637494073 maxt=1583647200000 ulid=01E2WWVRZ0PXGCKYH9CQ7PV6WH
+level=info ts=2020-03-10T01:06:52.534Z caller=repair.go:59 component=tsdb msg="found healthy block" mint=1583647200000 maxt=1583712000000 ulid=01E2YKW6FP8AP7YKVDXF8KTRES
+level=info ts=2020-03-10T01:06:52.573Z caller=repair.go:59 component=tsdb msg="found healthy block" mint=1583733600000 maxt=1583740800000 ulid=01E2Z8BEXGZQPHV850CARM95CV
+level=info ts=2020-03-10T01:06:52.573Z caller=repair.go:59 component=tsdb msg="found healthy block" mint=1583712000000 maxt=1583733600000 ulid=01E2Z8HXVKZV5HJYKA82HYJ2R2
+level=info ts=2020-03-10T01:06:52.573Z caller=repair.go:59 component=tsdb msg="found healthy block" mint=1583740800000 maxt=1583748000000 ulid=01E2ZF765BDTS0H5C4Y3RSGSAR
+level=info ts=2020-03-10T01:07:32.098Z caller=head.go:584 component=tsdb msg="replaying WAL, this may take awhile"
+level=info ts=2020-03-10T01:09:28.424Z caller=head.go:608 component=tsdb msg="WAL checkpoint loaded"
+level=info ts=2020-03-10T01:09:42.418Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=62 maxSegment=242
+level=info ts=2020-03-10T01:09:56.439Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=63 maxSegment=242
+level=info ts=2020-03-10T01:10:10.551Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=64 maxSegment=242
+level=info ts=2020-03-10T01:10:25.043Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=65 maxSegment=242
+level=info ts=2020-03-10T01:10:32.093Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=66 maxSegment=242
+level=info ts=2020-03-10T01:10:46.789Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=67 maxSegment=242
+level=info ts=2020-03-10T01:11:02.835Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=68 maxSegment=242
+level=info ts=2020-03-10T01:11:20.737Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=69 maxSegment=242
+level=info ts=2020-03-10T01:11:38.966Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=70 maxSegment=242
+level=warn ts=2020-03-10T01:11:46.148Z caller=main.go:494 msg="Received SIGTERM, exiting gracefully..."
+level=info ts=2020-03-10T01:11:46.148Z caller=main.go:517 msg="Stopping scrape discovery manager..."
+level=info ts=2020-03-10T01:11:46.148Z caller=main.go:531 msg="Stopping notify discovery manager..."
+level=info ts=2020-03-10T01:11:46.148Z caller=main.go:553 msg="Stopping scrape manager..."
+level=info ts=2020-03-10T01:11:46.148Z caller=main.go:513 msg="Scrape discovery manager stopped"
+level=info ts=2020-03-10T01:11:46.148Z caller=main.go:734 msg="Loading configuration file" filename=/etc/prometheus/config_out/prometheus.env.yaml
+level=info ts=2020-03-10T01:11:46.148Z caller=main.go:527 msg="Notify discovery manager stopped"
+level=info ts=2020-03-10T01:11:46.148Z caller=main.go:547 msg="Scrape manager stopped"
+level=info ts=2020-03-10T01:11:46.156Z caller=kubernetes.go:190 component="discovery manager scrape" discovery=k8s msg="Using pod service account via in-cluster config"
+level=info ts=2020-03-10T01:11:46.158Z caller=kubernetes.go:190 component="discovery manager scrape" discovery=k8s msg="Using pod service account via in-cluster config"
+level=info ts=2020-03-10T01:11:46.159Z caller=kubernetes.go:190 component="discovery manager scrape" discovery=k8s msg="Using pod service account via in-cluster config"
+level=info ts=2020-03-10T01:11:46.160Z caller=kubernetes.go:190 component="discovery manager scrape" discovery=k8s msg="Using pod service account via in-cluster config"
+level=info ts=2020-03-10T01:11:46.161Z caller=kubernetes.go:190 component="discovery manager notify" discovery=k8s msg="Using pod service account via in-cluster config"
+
+kubectl logs -f -n monitoring prometheus-pulse-monitor-prometheus-o-prometheus-0
+
+kubectl logs -f -n monitoring prometheus-pulse-monitor-prometheus-o-prometheus-0 prometheus
+level=info ts=2020-03-10T01:15:09.879Z caller=main.go:330 msg="Starting Prometheus" version="(version=2.15.2, branch=HEAD, revision=d9613e5c466c6e9de548c4dae1b9aabf9aaf7c57)"
+level=info ts=2020-03-10T01:15:09.879Z caller=main.go:331 build_context="(go=go1.13.5, user=root@688433cf4ff7, date=20200106-14:50:51)"
+level=info ts=2020-03-10T01:15:09.879Z caller=main.go:332 host_details="(Linux 4.15.0-1069-azure #74-Ubuntu SMP Fri Feb 7 17:22:24 UTC 2020 x86_64 prometheus-pulse-monitor-prometheus-o-prometheus-0 (none))"
+level=info ts=2020-03-10T01:15:09.879Z caller=main.go:333 fd_limits="(soft=1048576, hard=1048576)"
+level=info ts=2020-03-10T01:15:09.879Z caller=main.go:334 vm_limits="(soft=unlimited, hard=unlimited)"
+level=info ts=2020-03-10T01:15:09.993Z caller=main.go:648 msg="Starting TSDB ..."
+level=info ts=2020-03-10T01:15:09.994Z caller=web.go:506 component=web msg="Start listening for connections" address=0.0.0.0:9090
+level=info ts=2020-03-10T01:15:10.037Z caller=repair.go:59 component=tsdb msg="found healthy block" mint=1583637494073 maxt=1583647200000 ulid=01E2WWVRZ0PXGCKYH9CQ7PV6WH
+level=info ts=2020-03-10T01:15:10.079Z caller=repair.go:59 component=tsdb msg="found healthy block" mint=1583647200000 maxt=1583712000000 ulid=01E2YKW6FP8AP7YKVDXF8KTRES
+level=info ts=2020-03-10T01:15:10.121Z caller=repair.go:59 component=tsdb msg="found healthy block" mint=1583733600000 maxt=1583740800000 ulid=01E2Z8BEXGZQPHV850CARM95CV
+level=info ts=2020-03-10T01:15:10.121Z caller=repair.go:59 component=tsdb msg="found healthy block" mint=1583712000000 maxt=1583733600000 ulid=01E2Z8HXVKZV5HJYKA82HYJ2R2
+level=info ts=2020-03-10T01:15:10.121Z caller=repair.go:59 component=tsdb msg="found healthy block" mint=1583740800000 maxt=1583748000000 ulid=01E2ZF765BDTS0H5C4Y3RSGSAR
+level=info ts=2020-03-10T01:15:50.519Z caller=head.go:584 component=tsdb msg="replaying WAL, this may take awhile"
+level=info ts=2020-03-10T01:17:44.967Z caller=head.go:608 component=tsdb msg="WAL checkpoint loaded"
+level=info ts=2020-03-10T01:17:59.739Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=62 maxSegment=244
+level=info ts=2020-03-10T01:18:14.867Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=63 maxSegment=244
+level=info ts=2020-03-10T01:18:29.254Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=64 maxSegment=244
+level=info ts=2020-03-10T01:18:44.270Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=65 maxSegment=244
+level=info ts=2020-03-10T01:18:51.763Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=66 maxSegment=244
+level=info ts=2020-03-10T01:19:08.024Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=67 maxSegment=244
+level=info ts=2020-03-10T01:19:23.885Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=68 maxSegment=244
+level=info ts=2020-03-10T01:19:39.739Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=69 maxSegment=244
+level=info ts=2020-03-10T01:19:56.257Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=70 maxSegment=244
+level=info ts=2020-03-10T01:20:17.485Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=71 maxSegment=244
+level=info ts=2020-03-10T01:20:34.801Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=72 maxSegment=244
+level=info ts=2020-03-10T01:20:51.550Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=73 maxSegment=244
+level=info ts=2020-03-10T01:21:13.473Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=74 maxSegment=244
+level=info ts=2020-03-10T01:21:31.463Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=75 maxSegment=244
+level=info ts=2020-03-10T01:21:50.670Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=76 maxSegment=244
+level=info ts=2020-03-10T01:22:01.456Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=77 maxSegment=244
+level=info ts=2020-03-10T01:22:29.057Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=78 maxSegment=244
+level=info ts=2020-03-10T01:22:44.542Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=79 maxSegment=244
+level=info ts=2020-03-10T01:23:00.939Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=80 maxSegment=244
+level=info ts=2020-03-10T01:23:26.798Z caller=head.go:632 component=tsdb msg="WAL segment loaded" segment=81 maxSegment=244
+level=warn ts=2020-03-10T01:23:33.499Z caller=main.go:494 msg="Received SIGTERM, exiting gracefully..."
+level=info ts=2020-03-10T01:23:33.509Z caller=main.go:734 msg="Loading configuration file" filename=/etc/prometheus/config_out/prometheus.env.yaml
+level=info ts=2020-03-10T01:23:33.499Z caller=main.go:517 msg="Stopping scrape discovery manager..."
+level=info ts=2020-03-10T01:23:33.515Z caller=main.go:531 msg="Stopping notify discovery manager..."
+level=info ts=2020-03-10T01:23:33.515Z caller=main.go:553 msg="Stopping scrape manager..."
+level=info ts=2020-03-10T01:23:33.515Z caller=main.go:547 msg="Scrape manager stopped"
+level=info ts=2020-03-10T01:23:33.515Z caller=main.go:513 msg="Scrape discovery manager stopped"
+level=info ts=2020-03-10T01:23:33.515Z caller=main.go:527 msg="Notify discovery manager stopped"
+level=info ts=2020-03-10T01:23:33.536Z caller=kubernetes.go:190 component="discovery manager scrape" discovery=k8s msg="Using pod service account via in-cluster config"
+level=info ts=2020-03-10T01:23:33.567Z caller=kubernetes.go:190 component="discovery manager scrape" discovery=k8s msg="Using pod service account via in-cluster config"
+level=info ts=2020-03-10T01:23:33.616Z caller=kubernetes.go:190 component="discovery manager scrape" discovery=k8s msg="Using pod service account via in-cluster config"
+level=info ts=2020-03-10T01:23:33.644Z caller=kubernetes.go:190 component="discovery manager scrape" discovery=k8s msg="Using pod service account via in-cluster config"

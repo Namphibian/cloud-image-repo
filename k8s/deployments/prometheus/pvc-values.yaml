@@ -1,0 +1,90 @@
+# Define persistent storage for Prometheus (PVC)
+prometheus:
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        metadata:
+          name: pvc
+        spec:
+          accessModes: ["ReadWriteOnce"]
+
+          storageClassName: standard
+          #storageClassName: azurefile
+          resources:
+            requests:
+              storage: 16Gi
+
+
+
+# Define persistent storage for Grafana (PVC)
+grafana:
+  # Set password for Grafana admin user
+  adminPassword: admin
+  persistence:
+    enabled: true
+    #storageClassName: default
+    #storageClassName: azurefile
+    storageClassName: standard
+    accessModes: ["ReadWriteOnce"]
+    size: 2Gi
+
+# Define persistent storage for Alertmanager (PVC)
+alertmanager:
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+
+          #storageClassName: default
+          #storageClassName: azurefile
+          storageClassName: standard
+          resources:
+            requests:
+              storage: 2Gi
+
+# Change default node-exporter port
+#prometheus-node-exporter:
+#  service:
+#    port: 30206
+#    targetPort: 30206
+
+# Disable Etcd metrics
+kubeEtcd:
+  enabled: false
+
+# Disable Controller metrics
+kubeControllerManager:
+  enabled: false
+
+# Disable Scheduler metrics
+kubeScheduler:
+  enabled: false
+
+
+#prometheusOperator:
+#  namespaces:
+#    - pulse-dev
+#    - pulse-dev-alt
+#    - pulse-test
+#    - pulse-test-alt
+
+# Use HTTP Only for now.
+kubelet:
+  enabled: true
+  serviceMonitor:
+    https: false
+
+  # So AKS runs on port 9153 for these services.
+  # Defaults of 10055 and 10054 does not work
+  #kubeDns:
+  #  enabled: false
+  #service:
+  #  dnsmasq:
+  #    targetPort: 9153
+  #    port: 9153
+  #  skydns:
+  #    targetPort: 9153
+  #    port: 9153
+#coreDns:
+#  enabled: true
